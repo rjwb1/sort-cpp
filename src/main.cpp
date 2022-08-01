@@ -25,14 +25,16 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip> // to format image names using setw() and setfill()
-#include <io.h>    // to check file existence using POSIX function access(). On Linux include <unistd.h>.
+#include <unistd.h>    // to check file existence using POSIX function access(). On Linux include <unistd.h>.
 #include <set>
+#include <cfloat>
 
 #include "Hungarian.h"
 #include "KalmanTracker.h"
 
 #include "opencv2/video/tracking.hpp"
 #include "opencv2/highgui/highgui.hpp"
+#include "opencv2/core/cvdef.h"
 
 using namespace std;
 using namespace cv;
@@ -97,7 +99,7 @@ void TestSORT(string seqName, bool display)
 	string imgPath = "D:/Data/Track/2DMOT2015/train/" + seqName + "/img1/";
 
 	if (display)
-		if (_access(imgPath.c_str(), 0) == -1)
+		if (access(imgPath.c_str(), 0) == -1)
 		{
 			cerr << "Image path not found!" << endl;
 			display = false;
@@ -105,7 +107,7 @@ void TestSORT(string seqName, bool display)
 
 	// 1. read detection file
 	ifstream detectionFile;
-	string detFileName = "data/" + seqName + "/det.txt";
+	string detFileName = "/home/rob/catkin_ws/src/sort-cpp/src/data/" + seqName + "/det.txt";
 	detectionFile.open(detFileName);
 
 	if (!detectionFile.is_open())
@@ -179,7 +181,7 @@ void TestSORT(string seqName, bool display)
 
 	// prepare result file.
 	ofstream resultsFile;
-	string resFileName = "output/" + seqName + ".txt";
+	string resFileName = "/home/rob/catkin_ws/src/sort-cpp/src/output/" + seqName + ".txt";
 	resultsFile.open(resFileName);
 
 	if (!resultsFile.is_open())
@@ -348,8 +350,10 @@ void TestSORT(string seqName, bool display)
 		total_time += cycle_time / getTickFrequency();
 
 		for (auto tb : frameTrackingResult)
+		{
 			resultsFile << tb.frame << "," << tb.id << "," << tb.box.x << "," << tb.box.y << "," << tb.box.width << "," << tb.box.height << ",1,-1,-1,-1" << endl;
-
+			std::cout << tb.frame << "," << tb.id << "," << tb.box.x << "," << tb.box.y << "," << tb.box.width << "," << tb.box.height << ",1,-1,-1,-1" << endl;
+		}
 		if (display) // read image, draw results and show them
 		{
 			ostringstream oss;

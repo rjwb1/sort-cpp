@@ -11,6 +11,9 @@
 
 #include <iostream>
 #include <vector>
+#include <cmath>
+#include <cfloat>
+#include <opencv2/opencv.hpp>
 
 using namespace std;
 

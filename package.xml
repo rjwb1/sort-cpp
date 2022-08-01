@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<package format="2">
+  <name>sortcpp</name>
+  <version>1.0.0</version>
+  <description>
+    The sortcpp package.
+    Used for bridging the gap between research frameworks for object detection and ROS enabled robots.
+  </description>
+
+  <maintainer email="rbelshawe@sagarobotics.com">Robert Belshaw</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+
+  <!-- Core dependencies -->
+  <exec_depend>roscpp</exec_depend>
+
+</package>
